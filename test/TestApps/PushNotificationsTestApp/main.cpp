@@ -114,8 +114,11 @@ bool MultipleChannelRequestUsingMultipleRemoteId()
 
 bool ActivatorTest()
 {
-    PushNotificationManager::UnregisterActivator(PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator);
-    g_registeredActivator = false;
+    if (g_registeredActivator)
+    {
+        PushNotificationManager::UnregisterActivator(PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator);
+        g_registeredActivator = false;
+    }
 
     try
     {
@@ -136,8 +139,11 @@ bool ActivatorTest()
 // Verify calling register activator with null PushNotificationActivationInfo is not allowed.
 bool RegisterActivatorNullDetails()
 {
-    PushNotificationManager::UnregisterActivator(PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator);
-    g_registeredActivator = false;
+    if (g_registeredActivator)
+    {
+        PushNotificationManager::UnregisterActivator(PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator);
+        g_registeredActivator = false;
+    }
 
     try
     {
@@ -153,8 +159,11 @@ bool RegisterActivatorNullDetails()
 // Verify calling register activator with null clsid is not allowed.
 bool RegisterActivatorNullClsid()
 {
-    PushNotificationManager::UnregisterActivator(PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator);
-    g_registeredActivator = false;
+    if (g_registeredActivator)
+    {
+        PushNotificationManager::UnregisterActivator(PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator);
+        g_registeredActivator = false;
+    }
 
     try
     {
