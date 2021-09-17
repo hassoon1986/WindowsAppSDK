@@ -89,15 +89,22 @@ namespace winrt::Microsoft::Windows::PushNotifications::implementation
     {
         if (IsPackagedAppScenario())
         {
-            return m_channel.PushNotificationReceived([weak_self = get_weak(), handler](auto&&, auto&& args)
+            if (m_channel)
             {
-                if (auto strong = weak_self.get())
+                return m_channel.PushNotificationReceived([weak_self = get_weak(), handler](auto&&, auto&& args)
                 {
-                    auto pushArgs = winrt::make<winrt::Microsoft::Windows::PushNotifications::implementation::PushNotificationReceivedEventArgs>(args);
-                    pushArgs.Handled(true);
-                    handler(*strong, pushArgs);
-                };
-            });
+                    if (auto strong = weak_self.get())
+                    {
+                        auto pushArgs = winrt::make<winrt::Microsoft::Windows::PushNotifications::implementation::PushNotificationReceivedEventArgs>(args);
+                        pushArgs.Handled(true);
+                        handler(*strong, pushArgs);
+                    };
+                });
+            }
+            else
+            {
+                return {};
+            }
         }
         else
         {

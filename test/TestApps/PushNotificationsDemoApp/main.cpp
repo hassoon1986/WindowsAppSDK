@@ -18,7 +18,7 @@ winrt::Windows::Foundation::IAsyncOperation<PushNotificationChannel> RequestChan
     // To obtain an AAD RemoteIdentifier for your app,
     // follow the instructions on https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app
     auto channelOperation = PushNotificationManager::CreateChannelAsync(
-        winrt::guid("ccd2ae3f-764f-4ae3-be45-9804761b28b2"));
+        winrt::guid("0160ee84-0c53-4851-9ff2-d7f5a87ed914"));
 
     // Setup the inprogress event handler
     channelOperation.Progress(
@@ -47,7 +47,7 @@ winrt::Windows::Foundation::IAsyncOperation<PushNotificationChannel> RequestChan
         std::cout << "channelUri: " << winrt::to_string(channelUri.ToString()) << std::endl << std::endl;
 
         auto channelExpiry = result.Channel().ExpirationTime();
-
+#if 0
         // Register Push Event for Foreground
         winrt::event_token token = result.Channel().PushReceived([](const auto&, PushNotificationReceivedEventArgs const& args)
             {
@@ -58,6 +58,7 @@ winrt::Windows::Foundation::IAsyncOperation<PushNotificationChannel> RequestChan
                 std::cout << "Push notification content received from FOREGROUND: " << payloadString << std::endl << std::endl;
                 args.Handled(true);
             });
+#endif
         // Caller's responsibility to keep the channel alive
         co_return result.Channel();
     }
@@ -89,12 +90,13 @@ winrt::Microsoft::Windows::PushNotifications::PushNotificationChannel RequestCha
 
 int main()
 {
+#if 0
     PushNotificationActivationInfo info(
         PushNotificationRegistrationActivators::PushTrigger | PushNotificationRegistrationActivators::ComActivator,
-        winrt::guid("ccd2ae3f-764f-4ae3-be45-9804761b28b2")); // same clsid as app manifest
+        winrt::guid("a2e4a323-b518-4799-9e80-0b37aeb0d225")); // same clsid as app manifest
 
     PushNotificationManager::RegisterActivator(info);
-
+#endif
     auto args = AppInstance::GetCurrent().GetActivatedEventArgs();
     auto kind = args.Kind();
     if (kind == ExtendedActivationKind::Push)
